@@ -3,7 +3,7 @@ module WidgetBarrel
 	(:PrimitiveShapes)
 	module PrimitiveShapes
 	{
-		class ClipRegion
+		class Region
 		{
 			hidden var x1, y1, x2, y2;
 			
