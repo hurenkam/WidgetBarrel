@@ -13,8 +13,8 @@ module WidgetBarrel
 			const DefaultDimmed = 0xaaaaaa;
 			const DefaultDark =   0x555555;
 			
-			const AccentBright =  0x00AAFF;
-			const AccentDimmed =  0x0000FF;
+			const AccentBright =  Graphics.COLOR_BLUE; //0x00AAFF;
+			const AccentDimmed =  Graphics.COLOR_DK_BLUE; //0x0000FF;
 			const AccentDark =    0x000055;
 		}
 		
