@@ -43,7 +43,8 @@ module WidgetBarrel
 			
 			function onUpdate(dc, distance)
 			{
-				updateDistance(distance);
+				if (distance != null)
+				{ updateDistance(distance); }
 				
 				Gauge.onUpdate(dc);
 			}

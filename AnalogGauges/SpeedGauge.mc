@@ -32,7 +32,8 @@ module WidgetBarrel
 			
 			function onUpdate(dc, speed)
 			{
-				updateSpeed(speed);
+				if (speed != null)
+				{ updateSpeed(speed); }
 				
 				Gauge.onUpdate(dc);
 			}

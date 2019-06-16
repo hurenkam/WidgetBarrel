@@ -32,7 +32,8 @@ module WidgetBarrel
 			
 			function onUpdate(dc, heading)
 			{
-				updateHeading(heading);
+				if (heading != null)
+				{ updateHeading(heading); }
 				
 				Gauge.onUpdate(dc);
 			}
