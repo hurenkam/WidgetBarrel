@@ -1,3 +1,5 @@
+using Toybox.Graphics;
+
 module WidgetBarrel 
 {
 	(:PrimitiveShapes)
@@ -31,8 +33,13 @@ module WidgetBarrel
 			
 			function getClip()
 			{
-	 			var result = [ 0,0,0,0 ];
-				return result;
+	 			var region = new Region();
+	 			for (var i = 0; i<shape.size(); i++)
+	 			{
+	 				region.extendWithXY(shape[i][0],shape[i][1]);
+	 			}
+	 			
+ 				return region.get();
 			}
 			
 			function move(x,y)
@@ -61,11 +68,32 @@ module WidgetBarrel
 			
 			function draw(dc)
 			{
-				//var clip = getClip();
-				//dc.setClip(clip[0],clip[1],clip[2],clip[3]);
 				dc.setPenWidth(width);
 				dc.setColor(color,Graphics.COLOR_TRANSPARENT);
 				dc.fillPolygon(shape);
+			}
+		}
+	
+		(:test)
+		module TestPolygon
+		{
+			using Toybox.Test;
+			
+			(:test)
+	        function getClip(logger) {
+	            var p = new Polygon([
+	            		[10,10],
+	            		[10,20],
+	            		[20,20],
+	            		[20,10]
+	            	], Graphics.COLOR_WHITE, 1);
+	            var c = p.getClip();
+	            logger.debug("GetClip(): " + c);
+	            Test.assertEqual(10,c[0]);
+	            Test.assertEqual(10,c[1]);
+	            Test.assertEqual(11,c[2]);
+	            Test.assertEqual(11,c[3]);
+	            return true;
 			}
 		}
 	}

@@ -27,13 +27,16 @@ module WidgetBarrel
 				position.rotate(xr,yr,phi);
 			}
 			
-			function onUpdate(dc)
+			function onUpdateDamage(dc,damage)
 			{
-				draw(dc);
+				draw(dc,damage);
 			}
 			
-			function draw(dc)
+			function draw(dc,damage)
 			{
+				var d = damage.getOverlappingClip(x-r, y-r, r*2, r*2);
+				if ((d == null) || (!d.isValid())) { return; }
+				
 				drawFace(dc);
 			}
 			
@@ -43,7 +46,6 @@ module WidgetBarrel
 				var x = p[0];
 				var y = p[1];
 				
-				dc.setClip(x-r, y-r, r*2, r*2);
 				dc.setColor(t.Background, t.Background);
 		    	dc.setPenWidth(1);
 				dc.fillCircle(x, y, r);

@@ -52,9 +52,6 @@ module WidgetBarrel
 			
 			function draw(dc)
 			{
-				var clip = getClip();
-				dc.setClip(clip[0],clip[1],clip[2],clip[3]);
-				
 				dc.setPenWidth(width);
 				dc.setColor(color,Graphics.COLOR_TRANSPARENT);
 				

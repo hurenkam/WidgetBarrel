@@ -8,7 +8,7 @@ module WidgetBarrel
 	{
 		class AnalogTime extends Gauge
 		{
-			hidden var hours,minutes,seconds,bright;
+			var hours,minutes,seconds;
 			
 			function initialize(x, y, r, t, w)
 			{

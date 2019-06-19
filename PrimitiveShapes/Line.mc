@@ -49,7 +49,7 @@ module WidgetBarrel
 				var x2 = (p1[0]>p2[0]? p1[0] : p2[0]);
 				var y2 = (p1[1]>p2[1]? p1[1] : p2[1]);
 				
-				return [ x1-d, y1-d, x2-x1+width, y2-y1+width ];
+				return [ x1-d-1, y1-d-1, x2-x1+width+2, y2-y1+width+2 ];
 			}
 			
 			function move(x,y)
@@ -66,8 +66,6 @@ module WidgetBarrel
 			
 			function draw(dc)
 			{
-				var clip = getClip();
-				dc.setClip(clip[0],clip[1],clip[2],clip[3]);
 				dc.setPenWidth(width);
 				dc.setColor(color,Graphics.COLOR_TRANSPARENT);
 				dc.drawLine(source.get()[0],source.get()[1],destination.get()[0],destination.get()[1]);
