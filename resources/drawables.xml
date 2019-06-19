@@ -1,0 +1,7 @@
+<drawables>
+    <bitmap id="Gauge_09" filename="gauges/gauge_80_0-9.png" />
+    <bitmap id="Gauge_07" filename="gauges/gauge_80_0-7.png" />
+    <bitmap id="Gauge_035" filename="gauges/gauge_80_0-35.png" />
+    <bitmap id="Gauge_0175" filename="gauges/gauge_80_0-175.png" />
+    <bitmap id="Gauge_NESW" filename="gauges/gauge_80_NESW.png" />
+</drawables>

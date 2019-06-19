@@ -18,7 +18,6 @@ module WidgetBarrel
 				var y = position.getY();
 				
 				return new Shapes.Group([
-						null,
 						new Shapes.Polygon( [[x, y-h*0.7], [x-w/2, y], [x,     y]], t.AccentDimmed, 1),
 						new Shapes.Polygon( [[x, y-h*0.7], [x,     y], [x+w/2, y]], t.AccentBright, 1),
 						new Shapes.Polygon( [[x, y+h*0.7], [x-w/2, y], [x,     y]], t.DefaultDark, 1),

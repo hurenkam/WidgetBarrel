@@ -40,7 +40,7 @@ module WidgetBarrel
 				var result = [];
 				for (var i = 0; i<shape.size(); i++)
 				{
-					var p = new Position(shape[i]);
+					var p = new Position(shape[i][0],shape[i][1]);
 					p.move(x,y);
 					result.add(p.get());
 				}
