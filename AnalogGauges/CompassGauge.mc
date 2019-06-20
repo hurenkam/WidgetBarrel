@@ -5,7 +5,7 @@ module WidgetBarrel
 	(:AnalogGauges)
 	module AnalogGauges
 	{
-		class CompassGauge extends Gauge 
+		class CompassGauge extends Gauge
 		{
 			var heading;
 			
@@ -14,9 +14,9 @@ module WidgetBarrel
 		    	self.heading = 0;
 		    }
 		    
-			function draw(dc)
+			function draw(dc, damage)
 			{
-				Gauge.draw(dc);
+				Gauge.draw(dc, damage);
 
 				var angle = 2 * Math.PI * heading / 360;
 				
@@ -43,9 +43,9 @@ module WidgetBarrel
 				self.heading = heading;
 			}
 			
-		    function drawFace(dc)
+		    function drawFace(dc,damage)
 		    {
-				Gauge.drawFace(dc);
+				Gauge.drawFace(dc,damage);
 				
 				drawTickMarks(dc,  0, 16,  16, 3, 0, t.DefaultDimmed);
 				drawNumbers(dc,Graphics.FONT_SYSTEM_XTINY);

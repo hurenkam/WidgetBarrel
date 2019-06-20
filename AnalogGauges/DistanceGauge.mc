@@ -14,9 +14,9 @@ module WidgetBarrel
 		    	self.distance = 0;
 		    }
 		    
-			function draw(dc)
+			function draw(dc,damage)
 			{
-				Gauge.draw(dc);
+				Gauge.draw(dc,damage);
 
 				var km = self.distance.toLong() / 1000;
 				var hm = self.distance.toLong() % 1000;
@@ -54,9 +54,9 @@ module WidgetBarrel
 				self.distance = distance;
 			}
 			
-		    function drawFace(dc)
+		    function drawFace(dc,damage)
 		    {
-				Gauge.drawFace(dc);
+				Gauge.drawFace(dc,damage);
 				
 				drawTickMarks(dc, 0, 50, 50, 1, 0, t.DefaultDimmed);
 				drawTickMarks(dc, 0, 10, 10, 3, 0, t.AccentBright);

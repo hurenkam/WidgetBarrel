@@ -34,13 +34,15 @@ module WidgetBarrel
 			
 			function draw(dc,damage)
 			{
+				var x = position.getX();
+				var y = position.getY();
 				var d = damage.getOverlappingClip(x-r, y-r, r*2, r*2);
 				if ((d == null) || (!d.isValid())) { return; }
 				
-				drawFace(dc);
+				//drawFace(dc);
 			}
 			
-			function drawFace(dc)
+			function drawFace(dc, damage)
 			{
 				var p = position.get();
 				var x = p[0];
@@ -57,7 +59,6 @@ module WidgetBarrel
 				var x = p[0];
 				var y = p[1];
 				
-				dc.setClip(x-r, y-r, r*2, r*2);
 		    	dc.setPenWidth(width);
 		    	dc.setColor(color, Graphics.COLOR_TRANSPARENT);
 		    	

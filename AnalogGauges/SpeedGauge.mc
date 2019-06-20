@@ -14,9 +14,9 @@ module WidgetBarrel
 		    	self.speed = 0;
 		    }
 		    
-			function draw(dc)
+			function draw(dc,damage)
 			{
-				Gauge.draw(dc);
+				Gauge.draw(dc,damage);
 
 				var angle = 2 * Math.PI * speed / 10;
 				
@@ -40,12 +40,18 @@ module WidgetBarrel
 			
 			function updateSpeed(speed)
 			{
+				if (speed == self.speed) { return null; }
+				
 				self.speed = speed;
+				
+    			var result = new Shapes.Region();
+				result.extendWithClip(getClip());				
+				return result; 
 			}
 			
-		    function drawFace(dc)
+		    function drawFace(dc,damage)
 		    {
-				Gauge.drawFace(dc);
+				Gauge.drawFace(dc,damage);
 				
 				drawTickMarks(dc, 60, 80, 100, 1, 0, t.DefaultDimmed);
 				drawTickMarks(dc,  6,  9,  10, 3, 0, t.AccentBright);
