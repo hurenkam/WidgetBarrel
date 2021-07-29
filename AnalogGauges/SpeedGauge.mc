@@ -25,7 +25,7 @@ module WidgetBarrel
 
 			function drawHand(dc,angle)
 			{
-				var hand = new SpeedHand(position,r,8,35,t);
+				var hand = new SpeedHand(position,r,8,r*0.9,t);
 				hand.updateAngle(angle);
 				hand.draw(dc);
 			}
