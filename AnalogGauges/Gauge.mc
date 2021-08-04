@@ -51,6 +51,10 @@ module WidgetBarrel
 			
 		    function drawTickMarks(dc, start, count, divider, width, length, color)
 		    {
+				// Divide the circle in <divider> ticks
+				// Draw <count> of them
+				// Starting at position of the <start> tick clockwise from top
+				
 				var p = position.get();
 				var x = p[0];
 				var y = p[1];

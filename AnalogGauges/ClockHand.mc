@@ -23,7 +23,7 @@ module WidgetBarrel
 				var yt = position.getY() - radius * length;			
 				var yb = position.getY() + radius * 0.1;			
 			
-		    	var bottom = new Shapes.Position(x,yt);
+				var bottom = new Shapes.Position(x,yt);
 				var top = new Shapes.Position(x,yb);
 				
 				var hand = new Shapes.Line(bottom,top,color,width);
