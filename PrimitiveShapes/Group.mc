@@ -41,7 +41,6 @@ module WidgetBarrel
 			
 			function move(x,y)
 			{
-				var count = shapes.size();
 				for (var i = 0; i<shapes.size(); i++)
 				{
 					shapes[i].move(x,y);
@@ -50,7 +49,6 @@ module WidgetBarrel
 			
 			function rotate(xr,yr,phi)
 			{
-				var count = shapes.size();
 				for (var i = 0; i<shapes.size(); i++)
 				{
 					shapes[i].rotate(xr,yr,phi);
@@ -59,7 +57,6 @@ module WidgetBarrel
 			
 			function draw(dc)
 			{
-				var count = shapes.size();
 				for (var i = 0; i<shapes.size(); i++)
 				{
 					shapes[i].draw(dc);

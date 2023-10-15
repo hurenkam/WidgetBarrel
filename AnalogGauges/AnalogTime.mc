@@ -1,3 +1,4 @@
+/*
 using WidgetBarrel.PrimitiveShapes as Shapes;
 using WidgetBarrel.AnalogGauges as Gauges;
 
@@ -88,3 +89,4 @@ module WidgetBarrel
 		}
 	}
 }
+*/

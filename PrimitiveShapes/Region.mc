@@ -50,12 +50,12 @@ module WidgetBarrel
 			
 			function move(x,y)
 			{
-				position.move(x,y);
+				//position.move(x,y);
 			}
 			
 			function rotate(xr,yr,phi)
 			{
-				position.rotate(xr,yr,phi);
+				//position.rotate(xr,yr,phi);
 			}
 		}
 	}
