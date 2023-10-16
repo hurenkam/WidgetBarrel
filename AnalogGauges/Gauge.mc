@@ -19,20 +19,20 @@ class WatchFaceView extends WatchUi.WatchFace {
         self._outer = new Gauges.Gauge(
             { :x => 227, :y => 227, :radius => 227, :size => 48, :fullscreen => 1 },
             { :text => Graphics.COLOR_BLUE, :stripes => Graphics.COLOR_BLUE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
-            ["*....|....|....*....|....|         |....|....*....|....|....","12","3","9"]
+            ["*....|....|....*....|....|         |....|....*....|....|....","BionicBold","12","3","9"]
         );
 
         self._topleft = new Gauges.Gauge(
             { :x => 227-90, :y => 227-80, :radius => 70, :size => 24, :fullscreen => 0 },
             { :text => Graphics.COLOR_WHITE, :stripes => Graphics.COLOR_WHITE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
-            ["*.|.*.|.*.|.*.|.*.|.*.|.*.|.*.|.","N","|","E","|","S","|","W","|"]
+            ["*.|.*.|.*.|.*.|.*.|.*.|.*.|.*.|.","BionicBold","N","|","E","|","S","|","W","|"]
         );
 
         self._topright = new Gauges.Gauge(
             //{ :x => 227+90, :y => 227-80, :radius => 70, :size => 24 },
             { :x => 227+90, :y => 227-80, :radius => 70, :size => 24, :fullscreen => 0 },
             { :text => Graphics.COLOR_WHITE, :stripes => Graphics.COLOR_WHITE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
-            ["*....|....*....|         |....*....|....","2k","3k","1k"]
+            ["*....|....*....|         |....*....|....","BionicBold","2k","3k","1k"]
             // Analog Clock:   ["*....|....|....*....|....|....*....|....|....*....|....|....","12","3","6","9"]
             // Altitude:       ["*....|....*....|....*         *....|....*....|....","5k","7k","9k","1k","3k"]
             // Heading:        ["*.|.*.|.*.|.*.|.*.|.*.|.*.|.*.|.","N","|","E","|","S","|","W","|"]
@@ -41,7 +41,7 @@ class WatchFaceView extends WatchUi.WatchFace {
         self._bottom = new Gauges.Gauge(
             { :x => 227, :y => 227+140, :radius => 120, :size => 28, :fullscreen => 0 },
             { :text => Graphics.COLOR_WHITE, :stripes => Graphics.COLOR_WHITE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
-            ["*|*|*|*       *|*|*|","20","15","10","5","35","30","25"]
+            ["*|*|*|*       *|*|*|","BionicBold","20","15","10","5","35","30","25"]
             //["* ...|... * ...|... * ...|... *                                       * ...|... * ...|... * ...|... ","70","90","110","130","10","30","50"]
             // Hiking pace:          ["*|*|*|*       *|*|*|","20","15","10","5","35","30","25"]
             // Cycling speed:        ["*|*|*|*       *|*|*|","20","25","30","35","5","10","15"]
@@ -96,7 +96,8 @@ module WidgetBarrel
 				}
 
 				var chars = self._format[0].toCharArray();
-				var format_count = 1;
+				var font = self._format[1];
+				var format_count = 2;
 				var angle = 90; // top
 				var angle_inc = 360.0 / chars.size();
 
@@ -126,7 +127,7 @@ module WidgetBarrel
 					if (!text.equals(" "))
 					{
 						dc.drawRadialText(
-							self._location[:x], self._location[:y], Graphics.getVectorFont({ :face => "BionicBold", :size => size }), 
+							self._location[:x], self._location[:y], Graphics.getVectorFont({ :face => font, :size => size }), 
 							text, 
 							Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER, 
 							angle, pos, 
