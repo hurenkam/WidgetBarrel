@@ -1,3 +1,72 @@
+import Toybox.Graphics;
+import Toybox.Lang;
+import Toybox.System;
+import Toybox.WatchUi;
+
+module WidgetBarrel
+{
+	(:AnalogGauges)
+	module AnalogGauges
+	{
+		class AnalogTime
+		{
+			hidden var _location;
+
+			hidden var _face;
+			hidden var _hours;
+			hidden var _minutes;
+			hidden var _seconds;
+			hidden var _info;
+
+			function initialize(location as Dictionary<Symbol,Number>)
+			{
+				self._location = location;
+
+				var x = location[:x].toFloat();
+				var y = location[:y].toFloat();
+				var scale = location[:radius] / 227.0;
+
+				self._face = new Gauge(
+					location,
+					{ :text => Graphics.COLOR_BLUE, :stripes => Graphics.COLOR_BLUE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
+					["*....|....|....*....|....|         |....|....*....|....|....","BionicBold","12","3","9"]
+				);
+				self._hours = new Hand(
+					{:x => x, :y => y},
+					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => Rez.Drawables.HourHand}
+				);
+				self._minutes = new Hand(
+					{:x => x, :y => y},
+					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => Rez.Drawables.MinuteHand}
+				);
+				self._seconds = new Hand(
+					{:x => x, :y => y},
+					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => Rez.Drawables.SecondHand}
+				);
+			}
+
+			function drawFace(dc)
+			{
+				dc.setClip(_location[:x]-_location[:radius],_location[:x]-_location[:radius],_location[:radius]*2,_location[:radius]*2);
+				self._face.draw(dc);
+			}
+
+			function drawHands(dc,time)
+			{
+				dc.setClip(_location[:x]-_location[:radius],_location[:x]-_location[:radius],_location[:radius]*2,_location[:radius]*2);
+
+				var secondangle = (time.sec/60.0)   * 2.0 * Math.PI;
+				var minuteangle = (time.min/60.0)   * 2.0 * Math.PI;
+				var hourangle =   (time.hour/12.0)  * 2.0 * Math.PI + minuteangle/12;
+
+				self._hours.draw(dc,hourangle);
+				self._minutes.draw(dc,minuteangle);
+				self._seconds.draw(dc,secondangle);
+			}
+		}
+	}
+}
+
 /*
 using WidgetBarrel.PrimitiveShapes as Shapes;
 using WidgetBarrel.AnalogGauges as Gauges;
