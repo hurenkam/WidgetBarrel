@@ -3,13 +3,13 @@
 
 <svg
    width="30"
-   height="400"
-   viewBox="0 0 7.9374998 105.83333"
+   height="240"
+   viewBox="0 0 7.9374998 63.499998"
    version="1.1"
    id="svg1"
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   sodipodi:docname="compassneedle.svg"
-   inkscape:export-filename="..\compassneedle.jpg"
+   sodipodi:docname="longhand.svg"
+   inkscape:export-filename="..\longhand.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -27,9 +27,9 @@
      inkscape:pagecheckerboard="1"
      inkscape:deskcolor="#505050"
      inkscape:document-units="pt"
-     inkscape:zoom="1.3017622"
-     inkscape:cx="226.6159"
-     inkscape:cy="226.99999"
+     inkscape:zoom="3.8578431"
+     inkscape:cx="14.775095"
+     inkscape:cy="128.18043"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
      inkscape:window-x="-8"
@@ -39,6 +39,14 @@
      inkscape:export-bgcolor="#00000000" />
   <defs
      id="defs1">
+    <linearGradient
+       id="swatch3"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3" />
+    </linearGradient>
     <linearGradient
        id="linearGradient7"
        inkscape:collect="always">
@@ -119,36 +127,28 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <path
+       id="rect1"
+       d="m 3.0732248,1.1679083 c 0.9150242,-1.08926053 0.9237059,-1.01063695 1.6408975,0 C 4.622599,23.960756 4.9115413,63.119866 4.9115413,63.119866 H 3.0732248 c 0,0 -0.1063035,-39.237726 0,-61.9519577 z"
+       style="fill:#0300ff;fill-opacity:1;stroke:#00ffff;stroke-width:0.760281;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:nodetypes="ccccc" />
     <g
-       id="g8">
-      <path
-         style="fill:#929292;fill-opacity:1;stroke-width:0.104581"
-         d="M 0,53.213533 3.984187,105.83333 3.947647,53.03696 Z"
-         id="path3-1" />
-      <path
-         style="fill:#5c5c5c;fill-opacity:1;stroke-width:0.104581"
-         d="M 7.9375,53.093244 3.953314,105.71303 3.989854,52.916665 Z"
-         id="path3-7-8" />
-      <path
-         style="fill:#0ec1ff;fill-opacity:1;stroke-width:0.104581"
-         d="M 2e-6,52.619797 3.984189,0 3.947649,52.79637 Z"
-         id="path3" />
-      <path
-         style="fill:#0005b1;fill-opacity:1;stroke-width:0.104581"
-         d="M 7.937502,52.740086 3.953316,0.120296 3.989856,52.916665 Z"
-         id="path3-7" />
-      <circle
-         style="fill:url(#radialGradient8);stroke-width:0.211125"
-         id="path7"
-         cx="3.9687505"
-         cy="52.916664"
-         r="3.96875" />
-      <circle
-         style="fill:#000000;fill-opacity:1;stroke-width:0.185208"
-         id="path8"
-         cx="3.9687505"
-         cy="52.916664"
-         r="1.8520833" />
+       id="g1">
+      <g
+         id="g2">
+        <circle
+           style="fill:url(#radialGradient8);stroke-width:0.211125"
+           id="path7"
+           cx="3.9687505"
+           cy="52.916664"
+           r="3.96875" />
+        <circle
+           style="fill:#000000;fill-opacity:1;stroke-width:0.185208"
+           id="path8"
+           cx="3.9687505"
+           cy="52.916664"
+           r="1.8520833" />
+      </g>
     </g>
   </g>
 </svg>
