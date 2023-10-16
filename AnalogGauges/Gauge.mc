@@ -64,9 +64,6 @@ class WatchFaceView extends WatchUi.WatchFace {
 
 import Toybox.Graphics;
 import Toybox.Lang;
-import Toybox.System;
-//import Toybox.WatchUi;
-using WidgetBarrel.PrimitiveShapes as Shapes;
 
 module WidgetBarrel
 {
@@ -86,15 +83,14 @@ module WidgetBarrel
 				self._format = format;
 			}
 			
-			//function drawGauge(dc as Dc, location as Dictionary<Symbol,Number>, colors as Dictionary<Symbol,Graphics.ColorValue>, format as Array<String>) as Void {
 			function draw(dc)
 			{
 				// draw background
-				if (self._location[:fullscreen] == 0)
+				dc.setClip(self._location[:x]-self._location[:radius],self._location[:y]-self._location[:radius],self._location[:radius]*2,self._location[:radius]*2);
+				dc.setColor(self._colors[:background], self._colors[:background]);
+				dc.fillCircle(self._location[:x], self._location[:y], self._location[:radius]);
+				if (self._location[:fullscreen]==1)
 				{
-					dc.setColor(self._colors[:background], self._colors[:background]);
-					dc.fillCircle(self._location[:x], self._location[:y], self._location[:radius]);
-				} else {
 					var background = WatchUi.loadResource(Rez.Drawables.Background_454);
 					dc.drawBitmap(0, 0, background);
 				}
