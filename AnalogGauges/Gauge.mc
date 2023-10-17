@@ -8,15 +8,17 @@ module WidgetBarrel
 	{
 		class Gauge
 		{
-			hidden var _location as Dictionary<Symbol,Number>;
+			hidden var _location as Dictionary<Symbol,Float>;
+			hidden var _bitmap = null;
 			hidden var _colors as Dictionary<Symbol,Graphics.ColorValue>;
 			hidden var _format as Array<String>;
 
 			var LowPower = false;
 
-			function initialize(location as Dictionary<Symbol,Number>, colors as Dictionary<Symbol,Graphics.ColorValue>, format as Array<String>)
+			function initialize(location as Dictionary<Symbol,Float>, bitmap, colors as Dictionary<Symbol,Graphics.ColorValue>, format as Array<String>)
 			{
 				self._location = location;
+				self._bitmap = bitmap;
 				self._colors = colors;
 				self._format = format;
 			}
@@ -27,10 +29,18 @@ module WidgetBarrel
 				dc.setClip(self._location[:x]-self._location[:radius],self._location[:y]-self._location[:radius],self._location[:radius]*2,self._location[:radius]*2);
 				dc.setColor(self._colors[:background], self._colors[:background]);
 				dc.fillCircle(self._location[:x], self._location[:y], self._location[:radius]);
-				if (self._location[:fullscreen]==1 && !self.LowPower)
+				if ((self._bitmap[:reference] != null) && !self.LowPower)
 				{
-					var background = WatchUi.loadResource(Rez.Drawables.Background);
-					dc.drawBitmap(0, 0, background);
+					var bitmap = WatchUi.loadResource(self._bitmap[:reference]);
+					var scale = self._bitmap[:scale];
+					var transform = new Graphics.AffineTransform();
+					transform.scale(scale,scale);
+					transform.translate(self._bitmap[:dx],self._bitmap[:dy]);
+					dc.drawBitmap2(_location[:x],_location[:y], bitmap, {
+						:transform => transform
+					});
+					//var background = WatchUi.loadResource(self._bitmap[:reference]);
+					//dc.drawBitmap(0, 0, background);
 				}
 
 				var chars = self._format[0].toCharArray();
@@ -43,15 +53,15 @@ module WidgetBarrel
 				for (var i = 0; i < chars.size(); i++)
 				{
 					var text = "" + chars[i];
-					var size = self._location[:size]/2;
-					var pos = self._location[:radius] * 0.97;
+					var size = self._location[:size]*0.7;
+					var pos = self._location[:radius] * 0.95;
 
 					dc.setColor(self._colors[:dots], self._colors[:background]);
 
 					if (text.equals("*"))
 					{
 						text = self._format[format_count];
-						pos = self._location[:radius] * 0.94;
+						pos = self._location[:radius] * 0.90;
 						size = self._location[:size];
 						format_count += 1;
 						dc.setColor(self._colors[:text], self._colors[:background]);

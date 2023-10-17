@@ -11,6 +11,7 @@ module WidgetBarrel
 		class Clock
 		{
 			hidden var _location;
+			hidden var _bitmaps;
 
 			hidden var _face;
 			hidden var _hours;
@@ -38,35 +39,37 @@ module WidgetBarrel
 				}
 			}
 
-			function initialize(location as Dictionary<Symbol,Number>)
+			function initialize(location as Dictionary<Symbol,Float>, bitmaps)
 			{
 				self._location = location;
+				self._bitmaps = bitmaps;
 
 				if (WatchUi.WatchFace has :onPartialUpdate )
 				{
 					self._supportsPartialUpdate = true;
 				}
 
-				var x = location[:x].toFloat();
-				var y = location[:y].toFloat();
+				var x = location[:x];
+				var y = location[:y];
 				var scale = location[:radius] / 227.0;
 
 				self._face = new Gauge(
 					location,
+					{ :dx => -227, :dy => -227, :scale => scale, :reference => bitmaps[:face] },
 					{ :text => Graphics.COLOR_BLUE, :stripes => Graphics.COLOR_BLUE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
 					["*....|....|....*....|....|         |....|....*....|....|....","BionicBold","12","3","9"]
 				);
 				self._hours = new Hand(
 					{:x => x, :y => y},
-					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => Rez.Drawables.HourHand}
+					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => bitmaps[:hourhand]}
 				);
 				self._minutes = new Hand(
 					{:x => x, :y => y},
-					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => Rez.Drawables.MinuteHand}
+					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => bitmaps[:minutehand]}
 				);
 				self._seconds = new Hand(
 					{:x => x, :y => y},
-					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => Rez.Drawables.SecondHand}
+					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => bitmaps[:secondhand]}
 				);
 			}
 

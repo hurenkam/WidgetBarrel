@@ -16,23 +16,24 @@ module WidgetBarrel
 			hidden var _heading;
 			hidden var _info;
 
-			function initialize(location as Dictionary<Symbol,Number>)
+			function initialize(location as Dictionary<Symbol,Float>, bitmaps)
 			{
 				self._location = location;
 
-				var x = location[:x].toFloat();
-				var y = location[:y].toFloat();
+				var x = location[:x];
+				var y = location[:y];
 				var scale = location[:radius] / 227.0;
 
 				// compass on top left dial
 				self._face = new Gauge(
-					location,
+					location, 
+					{ :dx => -227, :dy => -227, :scale => scale, :reference => bitmaps[:face] },
 					{ :text => Graphics.COLOR_WHITE, :stripes => Graphics.COLOR_WHITE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
 					["*.|.*.|.*.|.*.|.*.|.*.|.*.|.*.|.","BionicBold","N","|","E","|","S","|","W","|"]
 				);
 				self._heading = new Hand(
 					{:x => x, :y => y},
-					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => Rez.Drawables.CompassNeedle}
+					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => bitmaps[:needle]}
 				);
 			}
 
