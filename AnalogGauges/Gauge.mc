@@ -12,6 +12,8 @@ module WidgetBarrel
 			hidden var _colors as Dictionary<Symbol,Graphics.ColorValue>;
 			hidden var _format as Array<String>;
 
+			var LowPower = false;
+
 			function initialize(location as Dictionary<Symbol,Number>, colors as Dictionary<Symbol,Graphics.ColorValue>, format as Array<String>)
 			{
 				self._location = location;
@@ -25,9 +27,9 @@ module WidgetBarrel
 				dc.setClip(self._location[:x]-self._location[:radius],self._location[:y]-self._location[:radius],self._location[:radius]*2,self._location[:radius]*2);
 				dc.setColor(self._colors[:background], self._colors[:background]);
 				dc.fillCircle(self._location[:x], self._location[:y], self._location[:radius]);
-				if (self._location[:fullscreen]==1)
+				if (self._location[:fullscreen]==1 && !self.LowPower)
 				{
-					var background = WatchUi.loadResource(Rez.Drawables.Background_454);
+					var background = WatchUi.loadResource(Rez.Drawables.Background);
 					dc.drawBitmap(0, 0, background);
 				}
 

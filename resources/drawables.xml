@@ -1,5 +1,5 @@
 <drawables>
-    <bitmap id="Background_454" filename="gauges/background-454.png" />
+    <bitmap id="Background" filename="gauges/background-454.png" />
     <bitmap id="MinuteHand" filename="gauges/longhand.png" automaticPalette="false"/>
     <bitmap id="HourHand" filename="gauges/shorthand.png" automaticPalette="false"/>
     <bitmap id="SecondHand" filename="gauges/secondhand.png" automaticPalette="false"/>
