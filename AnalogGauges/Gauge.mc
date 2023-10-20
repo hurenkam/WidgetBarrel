@@ -22,6 +22,11 @@ module WidgetBarrel
 				self._background = background;
 			}
 
+			function setClip(dc)
+			{
+				dc.setClip(self._location["x"]-self._location["r"],self._location["y"]-self._location["r"],self._location["r"]*2,self._location["r"]*2);
+			}
+
 			function draw(dc)
 			{
 				var backgroundColor = self._colors["Background"].toNumberWithBase(16);
@@ -30,7 +35,7 @@ module WidgetBarrel
 				var dotsColor =       self._colors["Dots"].toNumberWithBase(16);
 
 				// draw background
-				dc.setClip(self._location["x"]-self._location["r"],self._location["y"]-self._location["r"],self._location["r"]*2,self._location["r"]*2);
+				self.setClip(dc);
 				dc.setColor(backgroundColor, backgroundColor);
 				dc.fillCircle(self._location["x"], self._location["y"], self._location["r"]);
 				if ((self._background != null) && !self.LowPower)

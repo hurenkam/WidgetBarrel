@@ -36,25 +36,14 @@ module WidgetBarrel
 				);
 			}
 
-			function setClip(dc)
-			{
-				var r = self._properties["Location"]["r"];
-				var x = self._properties["Location"]["x"]-r;
-				var y = self._properties["Location"]["y"]-r;
-				var w = r*2;
-				var h = r*2;
-				dc.setClip(x,y,w,h);
-			}
-
 			function drawFace(dc)
 			{
-				self.setClip(dc);
 				self._face.draw(dc);
 			}
 
 			function drawHands(dc,speed)
 			{
-				self.setClip(dc);
+				self._face.setClip(dc);
 
 				var offset = Math.PI * 0.8;
 				var multiplier = (2 * Math.PI) / -50.0;

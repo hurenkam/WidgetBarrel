@@ -41,6 +41,11 @@ module WidgetBarrel
 
 			function initialize(properties, bitmaps)
 			{
+				if (WatchUi.WatchFace has :onPartialUpdate )
+				{
+					self._supportsPartialUpdate = true;
+				}
+
 				self._properties = properties;
 				self._bitmaps = bitmaps;
 
@@ -68,25 +73,14 @@ module WidgetBarrel
 				);
 			}
 
-			function setClip(dc)
-			{
-				var r = self._properties["Location"]["r"];
-				var x = self._properties["Location"]["x"]-r;
-				var y = self._properties["Location"]["y"]-r;
-				var w = r*2;
-				var h = r*2;
-				dc.setClip(x,y,w,h);
-			}
-
 			function drawFace(dc)
 			{
-				self.setClip(dc);
 				self._face.draw(dc);
 			}
 
 			function drawHands(dc,time)
 			{
-				self.setClip(dc);
+				self._face.setClip(dc);
 
 				self.drawHoursHand(dc,time.hour,time.min);
 				self.drawMinutesHand(dc,time.min);
