@@ -8,45 +8,28 @@ module WidgetBarrel
 	(:AnalogGauges)
 	module AnalogGauges
 	{
-		class Altimeter
+		class Altimeter extends Gauge
 		{
-			hidden var _properties;
-			hidden var _bitmaps;
-
-			hidden var _face;
+			public var Altitude = 2250;
 			hidden var _altitude;
 
 			function initialize(properties, bitmaps)
 			{
-				self._properties = properties;
-				self._bitmaps = bitmaps;
+				Gauge.initialize(properties, bitmaps);
 
-				var x = properties["Location"]["x"];
-				var y = properties["Location"]["y"];
-				var r = properties["Location"]["r"];
-				var dx = bitmaps[:dx];
-				var dy = bitmaps[:dy];
-				var scale = bitmaps[:scale];
-				var fontsize = properties["Decoration"]["Size"];
-
-				self._face = new Gauge(properties, bitmaps[:Background]);
 				self._altitude = new Hand(
-					{:x => x, :y => y},
-					{:dx => dx, :dy => dy, :scale => scale, :reference => bitmaps[:SpeedNeedle]}
+					{:x => self._x, :y => self._y},
+					{:dx => self._dx, :dy => self._dy, :scale => self._scale, :reference => bitmaps[:SpeedNeedle]}
 				);
 			}
 
-			function drawFace(dc)
+			function drawHands(dc)
 			{
-				self._face.draw(dc);
-			}
+				Gauge.drawHands(dc);
 
-			function drawHands(dc,altitude)
-			{
-				self._face.setClip(dc);
 				var offset = Math.PI;
 				var multiplier = (2 * Math.PI) / 4000.0;
-				var angle = offset + altitude * multiplier;
+				var angle = offset + Altitude * multiplier;
 
 				self._altitude.draw(dc,angle);
 			}

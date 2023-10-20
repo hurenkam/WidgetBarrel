@@ -6,7 +6,7 @@ module WidgetBarrel
 	(:AnalogGauges)
 	module AnalogGauges
 	{
-		class Gauge
+		class FacePlate
 		{
 			hidden var _location;
 			hidden var _decoration;
