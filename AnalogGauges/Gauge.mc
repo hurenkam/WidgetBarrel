@@ -24,15 +24,10 @@ module WidgetBarrel
 
 			function draw(dc)
 			{
-				var backgroundColor = self._colors["Background"].toNumber();
-				var textColor =       self._colors["Text"].toNumber();
-				var stripesColor =    self._colors["Stripes"].toNumber();
-				var dotsColor =       self._colors["Dots"].toNumber();
-
-				backgroundColor = Graphics.COLOR_BLACK;
-				textColor =       Graphics.COLOR_BLUE;
-				stripesColor =    Graphics.COLOR_BLUE;
-				dotsColor =       Graphics.COLOR_WHITE;
+				var backgroundColor = self._colors["Background"].toNumberWithBase(16);
+				var textColor =       self._colors["Text"].toNumberWithBase(16);
+				var stripesColor =    self._colors["Stripes"].toNumberWithBase(16);
+				var dotsColor =       self._colors["Dots"].toNumberWithBase(16);
 
 				// draw background
 				dc.setClip(self._location["x"]-self._location["r"],self._location["y"]-self._location["r"],self._location["r"]*2,self._location["r"]*2);
