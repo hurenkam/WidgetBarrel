@@ -10,7 +10,7 @@ module WidgetBarrel
 	{
 		class Clock
 		{
-			hidden var _location;
+			hidden var _properties;
 			hidden var _bitmaps;
 
 			hidden var _face;
@@ -39,49 +39,54 @@ module WidgetBarrel
 				}
 			}
 
-			function initialize(location as Dictionary<Symbol,Float>, bitmaps)
+			function initialize(properties, bitmaps)
 			{
-				self._location = location;
+				self._properties = properties;
 				self._bitmaps = bitmaps;
 
-				if (WatchUi.WatchFace has :onPartialUpdate )
-				{
-					self._supportsPartialUpdate = true;
-				}
+				var x = properties["Location"]["x"];
+				var y = properties["Location"]["y"];
+				var r = properties["Location"]["r"];
+				var dx = bitmaps[:dx];
+				var dy = bitmaps[:dy];
+				var scale = bitmaps[:scale];
+				var fontsize = properties["Decoration"]["Size"];
 
-				var x = location[:x];
-				var y = location[:y];
-				var scale = location[:radius] / 227.0;
+				self._face = new Gauge(properties, bitmaps[:Background]);
 
-				self._face = new Gauge(
-					location,
-					{ :dx => -227, :dy => -227, :scale => scale, :reference => bitmaps[:face] },
-					{ :text => Graphics.COLOR_BLUE, :stripes => Graphics.COLOR_BLUE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
-					["*....|....|....*....|....|         |....|....*....|....|....","BionicBold","12","3","9"]
-				);
 				self._hours = new Hand(
 					{:x => x, :y => y},
-					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => bitmaps[:hourhand]}
+					{:dx => dx, :dy => dy, :scale => scale, :reference => bitmaps[:HourHand]}
 				);
 				self._minutes = new Hand(
 					{:x => x, :y => y},
-					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => bitmaps[:minutehand]}
+					{:dx => dx, :dy => dy, :scale => scale, :reference => bitmaps[:MinuteHand]}
 				);
 				self._seconds = new Hand(
 					{:x => x, :y => y},
-					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => bitmaps[:secondhand]}
+					{:dx => dx, :dy => dy, :scale => scale, :reference => bitmaps[:SecondHand]}
 				);
+			}
+
+			function setClip(dc)
+			{
+				var r = self._properties["Location"]["r"];
+				var x = self._properties["Location"]["x"]-r;
+				var y = self._properties["Location"]["y"]-r;
+				var w = r*2;
+				var h = r*2;
+				dc.setClip(x,y,w,h);
 			}
 
 			function drawFace(dc)
 			{
-				dc.setClip(_location[:x]-_location[:radius],_location[:x]-_location[:radius],_location[:radius]*2,_location[:radius]*2);
+				self.setClip(dc);
 				self._face.draw(dc);
 			}
 
 			function drawHands(dc,time)
 			{
-				dc.setClip(_location[:x]-_location[:radius],_location[:x]-_location[:radius],_location[:radius]*2,_location[:radius]*2);
+				self.setClip(dc);
 
 				self.drawHoursHand(dc,time.hour,time.min);
 				self.drawMinutesHand(dc,time.min);
@@ -129,8 +134,12 @@ module WidgetBarrel
 				if (self._supportsPartialUpdate)
 				{
 					self.setClipRegion(dc,x,y,o);
-					dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_WHITE);
+					dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLUE);
+					dc.setPenWidth(2);
 					dc.drawLine(x,y,o[:x],o[:y]);
+
+					// this takes too much cpu time in low power mode...
+					//self._seconds.draw(dc,a);
 				} else {
 					self._seconds.draw(dc,a);
 				}
@@ -153,7 +162,7 @@ module WidgetBarrel
 					h = -1 * h;
 				}
 
-				dc.setClip(x-1,y-1,w+2,h+2);
+				dc.setClip(x-2,y-2,w+4,h+4);
 			}
 
 			function rotate(x,y,xr,yr,phi) as Dictionary<Symbol,Float>

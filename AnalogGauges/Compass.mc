@@ -10,42 +10,54 @@ module WidgetBarrel
 	{
 		class Compass
 		{
-			hidden var _location;
-
+			hidden var _properties;
+			hidden var _bitmaps;
 			hidden var _face;
+			hidden var _needle;
+
 			hidden var _heading;
-			hidden var _info;
+			hidden var _info;			
 
-			function initialize(location as Dictionary<Symbol,Float>, bitmaps)
+			function initialize(properties, bitmaps)
 			{
-				self._location = location;
+				self._properties = properties;
+				self._bitmaps = bitmaps;
 
-				var x = location[:x];
-				var y = location[:y];
-				var scale = location[:radius] / 227.0;
+				var x = properties["Location"]["x"];
+				var y = properties["Location"]["y"];
+				var r = properties["Location"]["r"];
+				var dx = bitmaps[:dx];
+				var dy = bitmaps[:dy];
+				var scale = bitmaps[:scale];
 
-				// compass on top left dial
-				self._face = new Gauge(
-					location, 
-					{ :dx => -227, :dy => -227, :scale => scale, :reference => bitmaps[:face] },
-					{ :text => Graphics.COLOR_WHITE, :stripes => Graphics.COLOR_WHITE, :dots => Graphics.COLOR_WHITE, :background => Graphics.COLOR_BLACK },
-					["*.|.*.|.*.|.*.|.*.|.*.|.*.|.*.|.","BionicBold","N","|","E","|","S","|","W","|"]
-				);
+				var fontsize = properties["Decoration"]["Size"];
+
+				self._face = new Gauge(properties, bitmaps[:Background]);
 				self._heading = new Hand(
 					{:x => x, :y => y},
-					{:dx => -15.0, :dy => -200.0, :scale => scale, :reference => bitmaps[:needle]}
+					{:dx => dx, :dy => dy, :scale => scale, :reference => bitmaps[:CompassNeedle]}
 				);
+			}
+
+			function setClip(dc)
+			{
+				var r = self._properties["Location"]["r"];
+				var x = self._properties["Location"]["x"]-r;
+				var y = self._properties["Location"]["y"]-r;
+				var w = r*2;
+				var h = r*2;
+				dc.setClip(x,y,w,h);
 			}
 
 			function drawFace(dc)
 			{
-				dc.setClip(_location[:x]-_location[:radius],_location[:x]-_location[:radius],_location[:radius]*2,_location[:radius]*2);
+				self.setClip(dc);
 				self._face.draw(dc);
 			}
 
 			function drawHands(dc,heading)
 			{
-				dc.setClip(_location[:x]-_location[:radius],_location[:x]-_location[:radius],_location[:radius]*2,_location[:radius]*2);
+				self.setClip(dc);
 
 				var angle = 2 * Math.PI * heading / 360.0;
 				self._heading.draw(dc,angle);
