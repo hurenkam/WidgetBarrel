@@ -2,6 +2,7 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
+import Toybox.Activity;
 
 module WidgetBarrel
 {
@@ -13,11 +14,13 @@ module WidgetBarrel
 			hidden var _hours;
 			hidden var _minutes;
 			hidden var _seconds;
+			hidden var _counter;
+			hidden var _timeInfo = { "current" => null, "elapsed" => null };
 			hidden var _previousSeconds = 0;
 
 			function initialize(properties, bitmaps)
 			{
-				Gauge.initialize(properties, bitmaps);
+				Gauge.initialize(properties["Location"], properties["Decoration"], properties["Colors"], bitmaps);
 
 				self._hours = new Hand(
 					{:x => self._x, :y => self._y},
@@ -31,19 +34,99 @@ module WidgetBarrel
 					{:x => self._x, :y => self._y},
 					{:dx => self._dx, :dy => self._dy, :scale => self._scale, :reference => bitmaps[:SecondHand]}
 				);
+
+				if (properties.hasKey("Counter"))
+				{
+					var w = properties["Counter"]["w"];
+					var wxc = properties["Counter"]["#"]*properties["Counter"]["w"]+2;
+					var count = properties["Counter"]["#"];
+					var h = properties["Counter"]["h"];
+					var x = self._x - wxc/2.0 -1;
+					var y = properties["Counter"]["y"];
+					var size = properties["Counter"]["size"];
+					self._counter = new Counter(
+						{   :x => x,
+							:y => y,
+							:w => wxc,
+							:h => h },
+						{	:font => "BionicBold",
+							//          bacground            high                 low
+							:colors => [Graphics.COLOR_TRANSPARENT,Graphics.COLOR_LT_GRAY,Graphics.COLOR_BLUE],
+							:dx => w/2.0,
+							:width => w,
+							:count => count,
+							:seperator => ':',
+							:position => 2,
+							:size => size },
+						{   :bitmap => bitmaps[:Counter] }
+					);
+				}
 			}
 
-			function drawHands(dc)
+			function updateInfo(info as Activity.Info)
+			{
+				Gauge.updateInfo(info);
+				self._timeInfo["current"] = getSystemTime();
+				self._timeInfo["elapsed"] = getElapsedTime(info);
+			}
+
+			function getSystemTime()
+			{
+				var time = System.getClockTime();
+				return { :hours => time.hour, :minutes => time.min, :seconds => time.sec };
+			}
+
+			function getElapsedTime(info)
+			{
+				if ((info == null) || (info.elapsedTime == null) || (info.elapsedTime == 0)) { return null; }
+
+				var hours = info.elapsedTime / (3600 * 1000);
+				var minutes = info.elapsedTime / (60 * 1000) - (hours * 60);
+				var seconds = info.elapsedTime / 1000 - (hours * 3600) - (minutes * 60);
+
+				return { :hours => hours, :minutes => minutes, :seconds => seconds };
+			}
+
+			function drawHands(dc as Dc)
 			{
 				Gauge.drawHands(dc);
-				var time = System.getClockTime();
+				var hands;
+				var counter;
 
-				self.drawHoursHand(dc,time.hour,time.min);
-				self.drawMinutesHand(dc,time.min);
+				if (self._timeInfo["elapsed"] != null)
+				{
+					hands = self._timeInfo["elapsed"];
+					counter = self._timeInfo["current"];
+
+				} else {
+					hands = self._timeInfo["current"];
+					counter = self._timeInfo["current"];
+				}
+
+				if (self._counter != null)
+				{
+					self.drawCounter(dc, counter[:hours], counter[:minutes]);
+				}
+
+				self._face.setClip(dc);
+				self.drawHoursHand(dc, hands[:hours], hands[:minutes]);
+				self.drawMinutesHand(dc, hands[:minutes]);
+
 				if (!self._sleeping)
 				{
-					self.drawSecondsHand(dc, time.sec);
+					self.drawSecondsHand(dc, hands[:seconds]);
 				}
+			}
+
+			function drawCounter(dc as Dc, hours, minutes)
+			{
+				var text = Lang.format(
+						"$1$$2$",
+						[hours.format("%02d"), minutes.format("%02d")]
+					);
+
+				self._counter.setText(text);
+				self._counter.draw(dc);
 			}
 
 			function drawHoursHand(dc as Dc, hours, minutes)

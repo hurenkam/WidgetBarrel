@@ -2,6 +2,7 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
+import Toybox.Activity;
 
 module WidgetBarrel
 {
@@ -10,7 +11,8 @@ module WidgetBarrel
 	{
 		class Gauge
 		{
-			protected var _properties;
+			hidden var _decoration;
+			hidden var _colors;
 			protected var _bitmaps;
 
 			protected var _x;
@@ -24,6 +26,7 @@ module WidgetBarrel
 			protected var _face;
 			protected var _supportsPartialUpdate = false;
 			protected var _sleeping = false;
+			protected var _info = null;
 
 			function onEnterSleep()
 			{
@@ -43,25 +46,31 @@ module WidgetBarrel
 				}
 			}
 
-			function initialize(properties, bitmaps)
+			function initialize(location, decoration, colors, bitmaps)
 			{
 				if (WatchUi.WatchFace has :onPartialUpdate )
 				{
 					self._supportsPartialUpdate = true;
 				}
 
-				self._properties = properties;
+				self._decoration = decoration;
+				self._colors = colors;
 				self._bitmaps = bitmaps;
 
-				self._x = properties["Location"]["x"];
-				self._y = properties["Location"]["y"];
-				self._r = properties["Location"]["r"];
+				self._x = location["x"];
+				self._y = location["y"];
+				self._r = location["r"];
 				self._dx = bitmaps[:dx];
 				self._dy = bitmaps[:dy];
 				self._scale = bitmaps[:scale];
-				self._fontsize = properties["Decoration"]["Size"];
+				self._fontsize = decoration["Size"];
 
-				self._face = new FacePlate(properties, bitmaps[:Background]);
+				self._face = new FacePlate(location, decoration, colors, bitmaps[:Background]);
+			}
+
+			function updateInfo(info as Activity.Info)
+			{
+				self._info = info;
 			}
 
 			function drawFace(dc)

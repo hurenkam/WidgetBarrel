@@ -2,6 +2,7 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
+import Toybox.Activity;
 
 module WidgetBarrel
 {
@@ -10,24 +11,35 @@ module WidgetBarrel
 	{
 		class Compass extends Gauge
 		{
-			public var Heading = 45;
-			hidden var _heading;
+			public var _heading = null;
+			hidden var _hand;
 
 			function initialize(properties, bitmaps)
 			{
-				Gauge.initialize(properties, bitmaps);
+				Gauge.initialize(properties["Location"], properties["Decoration"], properties["Colors"], bitmaps);
 
-				self._heading = new Hand(
+				self._hand = new Hand(
 					{:x => self._x, :y => self._y},
 					{:dx => self._dx, :dy => self._dy, :scale => self._scale, :reference => bitmaps[:CompassNeedle]}
 				);
 			}
 
+			function updateInfo(info as Activity.Info)
+			{
+				Gauge.updateInfo(info);
+				if (info != null)
+				{
+					self._heading = info.currentHeading;
+				}
+			}
+
 			function drawHands(dc)
 			{
-				self._face.setClip(dc);
-				var angle = 2 * Math.PI * Heading / 360.0;
-				self._heading.draw(dc,angle);
+				if (self._heading != null)
+				{
+					self._face.setClip(dc);
+					self._hand.draw(dc,self._heading);
+				}
 			}
 		}
 	}
